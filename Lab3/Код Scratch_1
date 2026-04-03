@@ -1,0 +1,43 @@
+import tkinter as tk
+from knowledge_base import medical_knowledge, financial_knowledge, tech_knowledge
+from utils import get_answer
+
+
+def process_medical():
+    query = entry.get()
+    result = get_answer(query, medical_knowledge)
+    result_label.config(text=f"Answer: {result}")
+
+def process_financial():
+    query = entry.get()
+    result = get_answer(query, financial_knowledge)
+    result_label.config(text=f"Answer: {result}")
+
+def process_tech():
+    query = entry.get()
+    result = get_answer(query, tech_knowledge)
+    result_label.config(text=f"Answer: {result}")
+
+window = tk.Tk()
+window.title("Knowledge-based System Interface")
+window.geometry("600x400")
+
+label = tk.Label(window, text="Enter your query:")
+label.pack(pady=10)
+
+entry = tk.Entry(window, width=50)
+entry.pack(pady=5)
+
+btn_medical = tk.Button(window, text="Medical System", command=process_medical)
+btn_medical.pack(pady=5)
+
+btn_financial = tk.Button(window, text="Financial System", command=process_financial)
+btn_financial.pack(pady=5)
+
+btn_tech = tk.Button(window, text="Technical System", command=process_tech)
+btn_tech.pack(pady=5)
+
+result_label = tk.Label(window, text="Result will be displayed here", wraplength=500, justify="left")
+result_label.pack(pady=20)
+
+window.mainloop()
