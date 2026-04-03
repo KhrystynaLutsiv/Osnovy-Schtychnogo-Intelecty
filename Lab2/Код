@@ -1,0 +1,58 @@
+s = "Hello, World!"
+print("Перший символ:", s[0])
+print("Верхній регістр:", s.upper())
+print("Нижній регістр:", s.lower())
+print("Довжина рядка:", len(s))
+print()
+
+s2 = "Python is great!"
+print("Позиція слова 'great':", s2.find("great"))
+
+words = s2.split(" ")
+print("Розбиття на слова:", words)
+
+new_s = " ".join(words)
+print("З'єднання назад:", new_s)
+print()
+
+s3 = "Hello"
+reversed_s = s3[::-1]
+print("Реверсування рядка:", reversed_s)
+print()
+
+s4 = "banana"
+count_a = s4.count("a")
+print(f"Символ 'a' зустрічається {count_a} разів")
+print()
+
+s5 = "I love Python"
+new_s5 = s5.replace("Python", "coding")
+print("Після заміни:", new_s5)
+print()
+
+def count_vowels(text):
+    vowels = "aeiouAEIOU"
+    count = sum(1 for char in text if char in vowels)
+    return count
+
+user_text = input("Введіть рядок для підрахунку голосних: ")
+print("Кількість голосних:", count_vowels(user_text))
+print()
+
+def is_palindrome(text):
+    cleaned = ''.join(char.lower() for char in text if char.isalnum())
+    return cleaned == cleaned[::-1]
+
+pal_text = input("Введіть рядок для перевірки на паліндром: ")
+print("Паліндром?" , is_palindrome(pal_text))
+print()
+
+text_with_spaces = input("Введіть рядок для заміни пробілів на _: ")
+text_no_spaces = text_with_spaces.replace(" ", "_")
+print("Рядок після заміни пробілів:", text_no_spaces)
+print()
+
+lines = input("Введіть декілька слів через кому для сортування: ").split(",")
+lines = [word.strip() for word in lines]
+lines.sort()
+print("Слова після сортування:", lines)
