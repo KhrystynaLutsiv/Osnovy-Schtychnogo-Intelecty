@@ -1,0 +1,7 @@
+def get_answer(query, knowledge):
+
+    query = query.lower()
+    if query in knowledge:
+        return knowledge[query]
+    else:
+        return "No information found for this query."
