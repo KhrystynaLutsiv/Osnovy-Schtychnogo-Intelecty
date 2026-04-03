@@ -1,0 +1,20 @@
+medical_knowledge = {
+    "headache": "Possible causes: tension, migraine, dehydration",
+    "fever": "Possible causes: infection, flu, COVID-19",
+    "cough": "Possible causes: cold, flu, bronchitis",
+    "stomachache": "Possible causes: indigestion, gastritis, infection"
+}
+
+financial_knowledge = {
+    "investing": "Advice: Diversify your portfolio, avoid high-risk stocks",
+    "savings": "Advice: Save at least 10% of your income",
+    "loan": "Advice: Compare interest rates before taking a loan",
+    "budget": "Advice: Track expenses and plan monthly budget"
+}
+
+tech_knowledge = {
+    "laptop": "Recommended: Depends on workload – gaming, office, design",
+    "printer": "Recommended: Laser printers for high volume, inkjet for home use",
+    "router": "Recommended: Check coverage area and speed requirements",
+    "camera": "Recommended: Mirrorless for portability, DSLR for professional use"
+}
