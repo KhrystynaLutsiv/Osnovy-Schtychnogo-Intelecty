@@ -1,0 +1,78 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = pd.DataFrame({
+    'Name': ['Alice', 'Bob', 'Charlie', 'David'],
+    'Age': [25, 30, 22, 35],
+    'Salary': [50000, 60000, 55000, 65000]
+})
+print("Штучний DataFrame:")
+print(data)
+print("\nІнформація про DataFrame:")
+print(data.info())
+
+older_than_30 = data[data['Age'] > 30]
+print("\nСпівробітники старші за 30 років:")
+print(older_than_30)
+
+print("\nСередній вік:", data['Age'].mean())
+print("Середня зарплата:", data['Salary'].mean())
+
+arr = np.array([1, 2, 3, 4, 5])
+print("\nМасив NumPy:", arr)
+print("Середнє значення:", np.mean(arr))
+print("Сума:", np.sum(arr))
+print("Мінімум:", np.min(arr))
+print("Максимум:", np.max(arr))
+
+ages = data['Age'].to_numpy()
+print("Середній вік (NumPy):", np.mean(ages))
+
+plt.scatter(data['Age'], data['Salary'], color='green')
+plt.title('Age vs Salary')
+plt.xlabel('Age')
+plt.ylabel('Salary')
+plt.show()
+
+plt.hist(data['Salary'], bins=4, color='skyblue')
+plt.title('Salary Distribution')
+plt.xlabel('Salary')
+plt.ylabel('Count')
+plt.show()
+
+try:
+    data_real = pd.read_csv('data.csv')
+    print("\nРеальний DataFrame з data.csv:")
+    print(data_real.head())
+
+    print("Кількість записів:", data_real.shape[0])
+    print("Середній вік:", data_real['Age'].mean())
+    print("Середня зарплата:", data_real['Salary'].mean())
+
+    high_salary = data_real[data_real['Salary'] > 55000]
+    print("\nСпівробітники з зарплатою > 55000:")
+    print(high_salary)
+except FileNotFoundError:
+    print("\nФайл data.csv не знайдено. Створи його у папці проекту.")
+
+my_data = pd.DataFrame({
+    'Product': ['Milk', 'Bread', 'Cheese', 'Butter'],
+    'Price': [20, 15, 50, 40],
+    'Quantity': [10, 25, 5, 8]
+})
+print("\nВласний DataFrame:")
+print(my_data)
+
+print("Середня ціна:", my_data['Price'].mean())
+print("Мінімальна кількість:", my_data['Quantity'].min())
+print("Максимальна кількість:", my_data['Quantity'].max())
+
+plt.bar(my_data['Product'], my_data['Price'], color='orange')
+plt.title('Price of Products')
+plt.xlabel('Product')
+plt.ylabel('Price')
+plt.show()
+
+quantities = my_data['Quantity'].to_numpy()
+print("Середня кількість товарів:", np.mean(quantities))
