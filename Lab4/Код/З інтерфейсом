@@ -1,0 +1,75 @@
+import tkinter as tk
+
+class ExpertSystem:
+    def __init__(self):
+        self.rules = []
+        self.facts = {}
+
+    def add_rule(self, conditions, result):
+        self.rules.append((conditions, result))
+
+    def add_fact(self, fact, value):
+        self.facts[fact] = value
+
+    def infer(self):
+        results = []
+        for conditions, result in self.rules:
+            if all(self.facts.get(cond, False) for cond in conditions):
+                results.append(result)
+        return results
+
+
+es = ExpertSystem()
+
+es.add_rule(['high_temperature', 'cough'], "Possible infection")
+es.add_rule(['headache', 'fatigue'], "Possible migraine")
+es.add_rule(['stomach_pain', 'nausea'], "Possible gastritis")
+es.add_rule(['cough', 'fatigue'], "Possible flu")
+
+
+def get_result():
+    es.facts = {}
+
+    es.add_fact('high_temperature', var_temp.get())
+    es.add_fact('cough', var_cough.get())
+    es.add_fact('headache', var_headache.get())
+    es.add_fact('fatigue', var_fatigue.get())
+    es.add_fact('stomach_pain', var_stomach.get())
+    es.add_fact('nausea', var_nausea.get())
+
+    results = es.infer()
+
+    if results:
+        result_label.config(text="Result:\n" + "\n".join(results))
+    else:
+        result_label.config(text="No diagnosis found")
+
+
+window = tk.Tk()
+window.title("Expert System - Medical Diagnosis")
+window.geometry("400x400")
+
+title = tk.Label(window, text="Select your symptoms:", font=("Arial", 12))
+title.pack(pady=10)
+
+var_temp = tk.BooleanVar()
+var_cough = tk.BooleanVar()
+var_headache = tk.BooleanVar()
+var_fatigue = tk.BooleanVar()
+var_stomach = tk.BooleanVar()
+var_nausea = tk.BooleanVar()
+
+tk.Checkbutton(window, text="High Temperature", variable=var_temp).pack()
+tk.Checkbutton(window, text="Cough", variable=var_cough).pack()
+tk.Checkbutton(window, text="Headache", variable=var_headache).pack()
+tk.Checkbutton(window, text="Fatigue", variable=var_fatigue).pack()
+tk.Checkbutton(window, text="Stomach Pain", variable=var_stomach).pack()
+tk.Checkbutton(window, text="Nausea", variable=var_nausea).pack()
+
+btn = tk.Button(window, text="Get Diagnosis", command=get_result)
+btn.pack(pady=15)
+
+result_label = tk.Label(window, text="Result will appear here", justify="left")
+result_label.pack(pady=20)
+
+window.mainloop()
