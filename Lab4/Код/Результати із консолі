@@ -1,0 +1,52 @@
+class ExpertSystem:
+    def __init__(self):
+        self.rules = []
+        self.facts = {}
+
+    def add_rule(self, conditions, result):
+        self.rules.append((conditions, result))
+
+    def add_fact(self, fact, value):
+        self.facts[fact] = value
+
+    def infer(self):
+        results = []
+        for conditions, result in self.rules:
+            if all(self.facts.get(cond, False) for cond in conditions):
+                results.append(result)
+        return results
+
+
+
+es = ExpertSystem()
+
+es.add_rule(['high_temperature', 'cough'], "Possible infection")
+es.add_rule(['headache', 'fatigue'], "Possible migraine")
+es.add_rule(['stomach_pain', 'nausea'], "Possible gastritis")
+es.add_rule(['cough', 'fatigue'], "Possible flu")
+
+
+print("Answer with yes or no:")
+
+temp = input("Do you have high temperature? ").lower() == "yes"
+cough = input("Do you have cough? ").lower() == "yes"
+headache = input("Do you have headache? ").lower() == "yes"
+fatigue = input("Do you feel fatigue? ").lower() == "yes"
+stomach = input("Do you have stomach pain? ").lower() == "yes"
+nausea = input("Do you feel nausea? ").lower() == "yes"
+
+es.add_fact('high_temperature', temp)
+es.add_fact('cough', cough)
+es.add_fact('headache', headache)
+es.add_fact('fatigue', fatigue)
+es.add_fact('stomach_pain', stomach)
+es.add_fact('nausea', nausea)
+
+results = es.infer()
+
+if results:
+    print("\nExpert system conclusions:")
+    for r in results:
+        print("-", r)
+else:
+    print("\nNo diagnosis found.")
