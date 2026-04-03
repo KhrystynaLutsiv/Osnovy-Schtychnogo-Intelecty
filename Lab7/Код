@@ -1,0 +1,56 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+from scipy.cluster.hierarchy import dendrogram, linkage
+from sklearn.cluster import DBSCAN
+
+from sklearn.datasets import load_iris
+iris = load_iris()
+data = pd.DataFrame(iris.data, columns=iris.feature_names)
+
+scaler = StandardScaler()
+data_scaled = scaler.fit_transform(data)
+
+kmeans = KMeans(n_clusters=3, random_state=42)
+clusters_kmeans = kmeans.fit_predict(data_scaled)
+
+centers = kmeans.cluster_centers_
+print("Центри кластерів K-means:\n", centers)
+
+silhouette_avg = silhouette_score(data_scaled, clusters_kmeans)
+print(f'Silhouette Score (K-means): {silhouette_avg:.3f}')
+
+plt.figure(figsize=(6,4))
+plt.scatter(data_scaled[:, 0], data_scaled[:, 1], c=clusters_kmeans, cmap='viridis')
+plt.scatter(centers[:, 0], centers[:, 1], c='red', marker='X', s=100)  # центри
+plt.title('K-means Clustering')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.show()
+
+Z = linkage(data_scaled, method='ward')
+plt.figure(figsize=(8, 4))
+dendrogram(Z)
+plt.title('Дендрограма (Ієрархічна кластеризація)')
+plt.xlabel('Зразки')
+plt.ylabel('Відстань')
+plt.show()
+
+dbscan = DBSCAN(eps=0.5, min_samples=5)
+clusters_dbscan = dbscan.fit_predict(data_scaled)
+
+plt.figure(figsize=(6,4))
+plt.scatter(data_scaled[:, 0], data_scaled[:, 1], c=clusters_dbscan, cmap='plasma')
+plt.title('DBSCAN Clustering')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.show()
+
+if len(set(clusters_dbscan)) > 1 and -1 not in set(clusters_dbscan):
+    silhouette_dbscan = silhouette_score(data_scaled, clusters_dbscan)
+    print(f'Silhouette Score (DBSCAN): {silhouette_dbscan:.3f}')
+else:
+    print("DBSCAN: недостатньо кластерів для Silhouette Score")
