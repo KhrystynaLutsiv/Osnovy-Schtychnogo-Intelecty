@@ -1,0 +1,44 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans, DBSCAN
+from sklearn.metrics import silhouette_score
+
+from scipy.cluster.hierarchy import dendrogram, linkage
+
+iris = load_iris()
+data = iris.data
+
+scaler = StandardScaler()
+data_scaled = scaler.fit_transform(data)
+
+kmeans = KMeans(n_clusters=3)
+kmeans.fit(data_scaled)
+
+clusters_kmeans = kmeans.labels_
+
+plt.figure()
+plt.scatter(data_scaled[:, 0], data_scaled[:, 1], c=clusters_kmeans)
+plt.title("K-Means Clustering")
+plt.show()
+
+Z = linkage(data_scaled, method='ward')
+
+plt.figure()
+dendrogram(Z)
+plt.title("Hierarchical Clustering Dendrogram")
+plt.show()
+
+dbscan = DBSCAN(eps=0.5, min_samples=5)
+clusters_dbscan = dbscan.fit_predict(data_scaled)
+
+plt.figure()
+plt.scatter(data_scaled[:, 0], data_scaled[:, 1], c=clusters_dbscan)
+plt.title("DBSCAN Clustering")
+plt.show()
+
+score = silhouette_score(data_scaled, clusters_kmeans)
+print("Silhouette Score (K-Means):", score)
