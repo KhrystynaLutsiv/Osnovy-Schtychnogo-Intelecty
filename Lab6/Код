@@ -1,0 +1,74 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.preprocessing import StandardScaler
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+
+np.random.seed(42)
+temperature = np.random.uniform(20, 40, 500)
+humidity = np.random.uniform(30, 80, 500)
+load = np.random.uniform(0, 100, 500)
+
+cooling_power = 0.5 * temperature + 0.3 * humidity + 0.2 * load
+
+data = pd.DataFrame({
+    'temperature': temperature,
+    'humidity': humidity,
+    'load': load,
+    'cooling_power': cooling_power
+})
+
+
+X = data[['temperature', 'humidity', 'load']]
+y = data['cooling_power']
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+
+model = Sequential()
+model.add(Dense(64, activation='relu', input_shape=(3,)))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(1))
+
+model.compile(optimizer='adam', loss='mean_squared_error')
+
+
+history = model.fit(
+    X_scaled, y,
+    epochs=50,
+    batch_size=16,
+    validation_split=0.2
+)
+
+new_data = np.array([[30, 50, 60]])
+new_data_scaled = scaler.transform(new_data)
+
+prediction = model.predict(new_data_scaled)
+
+print("\n=== КЕРУВАННЯ СИСТЕМОЮ ===")
+print(f"Вхідні дані: температура=30, вологість=50, навантаження=60")
+print(f"Рекомендована потужність охолодження: {prediction[0][0]:.2f}")
+
+
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('Навчання нейронної мережі')
+plt.xlabel('Епохи')
+plt.ylabel('Помилка')
+plt.legend(['Навчання', 'Валідація'])
+plt.show()
+dbscan = DBSCAN(eps=0.5, min_samples=5)
+clusters_dbscan = dbscan.fit_predict(data_scaled)
+
+plt.figure()
+plt.scatter(data_scaled[:, 0], data_scaled[:, 1], c=clusters_dbscan)
+plt.title("DBSCAN Clustering")
+plt.show()
+
+score = silhouette_score(data_scaled, clusters_kmeans)
+print("Silhouette Score (K-Means):", score)
